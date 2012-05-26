@@ -116,11 +116,6 @@ class Submit(webapp2.RequestHandler):
 		template = jinja_environment.get_template('submit.html')                
 		self.response.out.write(template.render(template_values))
 		
-# main		
-#contact1 = Contact(pid = 'teo.ningzhi.angelyn', name = 'Teo Ning Zhi Angelyn', class12 = '5C23', email = 'teo.ningzhi.angelyn@dhs.sg', handphone = '', tickets_csjh = '', tickets_edssh = '', remark = '')
-#contact1.put()
-#contact2 = Contact(pid = 'lim.ahseng', name = 'Lim Ah Seng', class12 = '5C99', email = 'lim.ahseng@dhs.sg', handphone = '', tickets_csjh = '', tickets_edssh = '', remark = '')
-#contact2.put()   
 	
 app = webapp2.WSGIApplication([('/', MainHandler), ('/submit', Submit)], 
 								debug=True)
