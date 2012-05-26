@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+		<title>TICKETING@DHS</title>
+		<link rel="stylesheet" href="/static/style.css" />
+	</head>
+  
+    <table cellpadding="0px" cellspacing="0px" align="center" width="100%">
+	<tr>
+	<td colspan="1" align="center" valign="middle" width="100%" height = "10%">
+		<header><b>TICKETING @ DHS</b></header>
+    </td>
+    </tr>
+		
+	<body>
+	<tr>
+	<td width="100%" align="center">
+	{% if contact %}
+	
+		<h1>Confirmation</h1>
+			<h2>Contact Number:</h2> {{ contact.handphone }}
+			<h2>Chinese Society (JH):</h2>{{ contact.tickets_csjh }}
+			<h2>English Drama Society (SH):</h2>{{ contact.tickets_edssh }}
+			<h2>Remarks:</h2> {{ contact.remark }}
+			<br /><br />
+			{% else %}
+				<p>You need to sign in</p>
+			{% endif %}
+            </td></tr>
+			
+	<h3 align="right">{{ greeting }} | <a href="{{ url }}">{{ url_linktext }}</a></h3>
+	</body>
+    
+    <tr>
+  <td width="100%" height="10%" align="center">
+	<footer>
+    &copy; TNZA 2012
+	</footer>
+</td></tr>
+</html>

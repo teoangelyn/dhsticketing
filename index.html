@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+		<title>TICKETING@DHS</title>
+		<link rel="stylesheet" href="/static/style.css" />
+		<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+		<script src="/static/prettyComments.js"></script>
+ 		<script>
+				$(document).ready(function(){
+				$('textarea').prettyComments();
+				});
+		</script>
+	</head>
+  
+
+    <table cellpadding="0px" cellspacing="0px" align="center" width="100%">
+	<tr>
+	<td colspan="1" align="center" valign="middle" width="100%" height = "10%">
+		<header><b>TICKETING @ DHS</b></header>
+    </td>
+    </tr>
+
+	<body>
+	<tr>
+	<td width="100%" align="center">
+		{% if contact %}
+		<h2> Instructions </h2>
+		(1) Please fill in the relevant details to reserve tickets.<br />
+		(2) Each ticket costs $10.<br />		
+		(3) Details of the concerts are as follow: <br />
+		- Chinese Society (JH), XX May 2012, 7PM-9PM @ Dunman High School Performing Arts Centre<br />
+		- English Drama Society (SH), 27 May 2012, 2PM-4PM @ Dunman High School Performing Arts Centre<br />
+		<br />
+			<form action="/submit" method="post" >
+
+				<label for="handphone">Contact Number</label>
+				<input type="tel" id="handphone" name="handphone" value="{{ contact.handphone | escape }}" onKeyPress="if(event.keyCode!=46 && event.keyCode!=45 && (event.keyCode<48 || event.keyCode>57)) event.returnValue=false" placeholder="Eg 91234567" />
+
+				<br /><br />
+
+				<b>Quantity of Tickets </br></b>
+
+				<label for="tickets_cs">Chinese Society (JH)</label>
+				<input type="number" id="tickets_csjh" name="tickets_csjh" min="0" max="100" value="{{ contact.tickets_csjh | escape }}" />
+				<br /><br />
+
+
+				<label for="tickets_edssh">English Drama Society (SH)</label>
+				<input type="number" id="tickets_edssh" name="tickets_edssh"" min="0" max="100" value="{{ contact.tickets_edssh | escape }}" />
+				<br /><br />
+
+				<label for="remark">Remark</label>
+				<textarea id="remark" name="remark" col="30" row="5">{{ contact.remark|escape }}</textarea>	
+
+				<br /><br />
+
+				<input type="submit" id="submit" name="submit" value="Submit" />
+				</form>
+			{% else %}
+				<p>You need to sign in</p>
+			{% endif %}
+            </td></tr>
+
+	<h3 align="right">{{ greeting }} | <a href="{{ url }}">{{ url_linktext }}</a></h3>
+	</body>
+    
+    <tr>
+  <td width="100%" height="10%" align="center">
+	<footer>
+    &copy; TNZA 2012
+	</footer>
+</td></tr>
+</html>
