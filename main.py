@@ -28,15 +28,15 @@ class MainHandler(webapp2.RequestHandler):
 		''' Show home page '''
 		# import data
 		# check if valid Google account
-		school_register = csv.reader(open('data.csv'),delimiter=',')
-		found = False
+#		school_register = csv.reader(open('data.csv'),delimiter=',')
+#		found = False
 		user = users.get_current_user()
 	
-		for student in school_register:	# if valid logged in user
-			if student[0] == self.request.get('pid'):
-				user = student
-				found = True
-				break
+#		for student in school_register:	# if valid logged in user
+#			if student[0] == self.request.get('pid'):
+#				contact = student
+#				found = True
+#				break
 
 		if user: 
 			# logout link
@@ -62,8 +62,6 @@ class MainHandler(webapp2.RequestHandler):
 			contact = "Not authorised"
 			greeting = "You need to"
 			
-
-					
 		template_values = {
 			'contact': contact,
 			'greeting': greeting,
@@ -79,16 +77,17 @@ class MainHandler(webapp2.RequestHandler):
 class Submit(webapp2.RequestHandler):
 	''' Submit form '''
 	def post(self):
-		updated_handphone = self.request.get('handphone')
-		updated_tickets_csjh = self.request.get('tickets_csjh')
-		updated_tickets_edssh = self.request.get('tickets_edssh')
-		updated_remark = self.request.get('remark')
-		user = users.get_current_user()
-		if user:
+		if self.request.get('submit'):
+			updated_handphone = self.request.get('handphone')
+			updated_tickets_csjh = self.request.get('tickets_csjh')
+			updated_tickets_edssh = self.request.get('tickets_edssh')
+			updated_remark = self.request.get('remark')
 			url = users.create_logout_url(self.request.uri)
 			url_linktext = 'Logout'
+			user = users.get_current_user()
 			query = Contact.gql('WHERE pid = :1', user.nickname())
 			result = query.fetch(1)
+			
 			if result: 
 				contact = result[0]
 				greeting = ("User: %s" % (contact.name,)) 
@@ -99,8 +98,7 @@ class Submit(webapp2.RequestHandler):
 				contact.put()
 			else: 	
 				self.response.out.write('Reservation failed!')
-		
-		
+	
 		
 		template_values = {
 			'contact': contact,
@@ -115,7 +113,12 @@ class Submit(webapp2.RequestHandler):
 		
 		template = jinja_environment.get_template('submit.html')                
 		self.response.out.write(template.render(template_values))
-		
+
+# main
+contact1 = Contact(pid = 'teo.ningzhi.angelyn', name = 'Teo Ning Zhi Angelyn', class12 = '5C23', email = 'teo.ningzhi.angelyn@dhs.sg', handphone = '', tickets_csjh = '', tickets_edssh = '', remark = '')
+contact1.put()
+contact2 = Contact(pid = 'lim.ahseng', name = 'Lim Ah Seng', class12 = '5C99', email = 'lim.ahseng@dhs.sg', handphone = '', tickets_csjh = '', tickets_edssh = '', remark = '')
+contact2.put()
 	
 app = webapp2.WSGIApplication([('/', MainHandler), ('/submit', Submit)], 
 								debug=True)
